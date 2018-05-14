@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruyidd.system.dao.SysLogEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.ruyidd.system.entity.SysLogEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="operation_type" property="operationType" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="remote_addr" property="remoteAddr" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="request_uri" property="requestUri" jdbcType="VARCHAR" />
+    <result column="http_method" property="httpMethod" jdbcType="VARCHAR" />
+    <result column="class_method" property="classMethod" jdbcType="VARCHAR" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+    <result column="use_time" property="useTime" jdbcType="BIGINT" />
+    <result column="browser" property="browser" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ruyidd.system.entity.SysLogEntityWithBLOBs" extends="BaseResultMap" >
+    <result column="params" property="params" jdbcType="LONGVARCHAR" />
+    <result column="response" property="response" jdbcType="LONGVARCHAR" />
+    <result column="exception" property="exception" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, type, operation_type, title, remote_addr, username, request_uri, http_method, 
+    class_method, session_id, use_time, browser, area, province, city, create_by, create_date, 
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    params, response, exception
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ruyidd.system.entity.SysLogEntityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ruyidd.system.entity.SysLogEntityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ruyidd.system.entity.SysLogEntityExample" >
+    delete from sys_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ruyidd.system.entity.SysLogEntityWithBLOBs" >
+    insert into sys_log (id, type, operation_type, 
+      title, remote_addr, username, 
+      request_uri, http_method, class_method, 
+      session_id, use_time, browser, 
+      area, province, city, 
+      create_by, create_date, update_by, 
+      update_date, remarks, del_flag, 
+      params, response, exception
+      )
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{operationType,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{remoteAddr,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{requestUri,jdbcType=VARCHAR}, #{httpMethod,jdbcType=VARCHAR}, #{classMethod,jdbcType=VARCHAR}, 
+      #{sessionId,jdbcType=VARCHAR}, #{useTime,jdbcType=BIGINT}, #{browser,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=BIT}, 
+      #{params,jdbcType=LONGVARCHAR}, #{response,jdbcType=LONGVARCHAR}, #{exception,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ruyidd.system.entity.SysLogEntityWithBLOBs" >
+    insert into sys_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="operationType != null" >
+        operation_type,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="remoteAddr != null" >
+        remote_addr,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="requestUri != null" >
+        request_uri,
+      </if>
+      <if test="httpMethod != null" >
+        http_method,
+      </if>
+      <if test="classMethod != null" >
+        class_method,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="useTime != null" >
+        use_time,
+      </if>
+      <if test="browser != null" >
+        browser,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="params != null" >
+        params,
+      </if>
+      <if test="response != null" >
+        response,
+      </if>
+      <if test="exception != null" >
+        exception,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null" >
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteAddr != null" >
+        #{remoteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null" >
+        #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="httpMethod != null" >
+        #{httpMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="classMethod != null" >
+        #{classMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="useTime != null" >
+        #{useTime,jdbcType=BIGINT},
+      </if>
+      <if test="browser != null" >
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="params != null" >
+        #{params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="response != null" >
+        #{response,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exception != null" >
+        #{exception,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ruyidd.system.entity.SysLogEntityExample" resultType="java.lang.Integer" >
+    select count(*) from sys_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationType != null" >
+        operation_type = #{record.operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remoteAddr != null" >
+        remote_addr = #{record.remoteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestUri != null" >
+        request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.httpMethod != null" >
+        http_method = #{record.httpMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classMethod != null" >
+        class_method = #{record.classMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionId != null" >
+        session_id = #{record.sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useTime != null" >
+        use_time = #{record.useTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.browser != null" >
+        browser = #{record.browser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null" >
+        update_by = #{record.updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delFlag != null" >
+        del_flag = #{record.delFlag,jdbcType=BIT},
+      </if>
+      <if test="record.params != null" >
+        params = #{record.params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.response != null" >
+        response = #{record.response,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.exception != null" >
+        exception = #{record.exception,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update sys_log
+    set id = #{record.id,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=VARCHAR},
+      operation_type = #{record.operationType,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      remote_addr = #{record.remoteAddr,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      http_method = #{record.httpMethod,jdbcType=VARCHAR},
+      class_method = #{record.classMethod,jdbcType=VARCHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      use_time = #{record.useTime,jdbcType=BIGINT},
+      browser = #{record.browser,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=BIGINT},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      del_flag = #{record.delFlag,jdbcType=BIT},
+      params = #{record.params,jdbcType=LONGVARCHAR},
+      response = #{record.response,jdbcType=LONGVARCHAR},
+      exception = #{record.exception,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_log
+    set id = #{record.id,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=VARCHAR},
+      operation_type = #{record.operationType,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      remote_addr = #{record.remoteAddr,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      http_method = #{record.httpMethod,jdbcType=VARCHAR},
+      class_method = #{record.classMethod,jdbcType=VARCHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR},
+      use_time = #{record.useTime,jdbcType=BIGINT},
+      browser = #{record.browser,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=BIGINT},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      del_flag = #{record.delFlag,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruyidd.system.entity.SysLogEntityWithBLOBs" >
+    update sys_log
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null" >
+        operation_type = #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteAddr != null" >
+        remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null" >
+        request_uri = #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="httpMethod != null" >
+        http_method = #{httpMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="classMethod != null" >
+        class_method = #{classMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="useTime != null" >
+        use_time = #{useTime,jdbcType=BIGINT},
+      </if>
+      <if test="browser != null" >
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="params != null" >
+        params = #{params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="response != null" >
+        response = #{response,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exception != null" >
+        exception = #{exception,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ruyidd.system.entity.SysLogEntityWithBLOBs" >
+    update sys_log
+    set type = #{type,jdbcType=VARCHAR},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      request_uri = #{requestUri,jdbcType=VARCHAR},
+      http_method = #{httpMethod,jdbcType=VARCHAR},
+      class_method = #{classMethod,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      use_time = #{useTime,jdbcType=BIGINT},
+      browser = #{browser,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=BIT},
+      params = #{params,jdbcType=LONGVARCHAR},
+      response = #{response,jdbcType=LONGVARCHAR},
+      exception = #{exception,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruyidd.system.entity.SysLogEntity" >
+    update sys_log
+    set type = #{type,jdbcType=VARCHAR},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      request_uri = #{requestUri,jdbcType=VARCHAR},
+      http_method = #{httpMethod,jdbcType=VARCHAR},
+      class_method = #{classMethod,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      use_time = #{useTime,jdbcType=BIGINT},
+      browser = #{browser,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
