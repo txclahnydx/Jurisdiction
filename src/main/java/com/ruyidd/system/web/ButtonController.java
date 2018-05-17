@@ -1,5 +1,7 @@
 package com.ruyidd.system.web;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,8 +39,6 @@ public class ButtonController extends BaseController{
 	 */
 	@RequestMapping("/add")
 	public String buttonAdd() {
-		int i = 1/0;
-		System.out.println(i);
 		return "system/button/buttonAdd";
 	}
 	
@@ -55,7 +55,6 @@ public class ButtonController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/getButtonList")
 	public Object getButtonList() {
-		int i = 1/0;
 		List<ButtonEntity> buttonList = buttonService.getButtonEntityList(null);
 		return RestResult.success().setData(buttonList);
 	}
@@ -64,13 +63,24 @@ public class ButtonController extends BaseController{
 	@RequestMapping("/doAdd")
 	public RestResult doAdd(ButtonEntity button) {
 		Map<String, Object> conditions = new HashMap<>();
+		/**
+		 * 校验名称
+		 */
 		conditions.put("name", button.getName());
-		conditions.put("field", button.getField());
 		List<ButtonEntity> buttonList = buttonService.getButtonEntityList(conditions);
 		if(buttonList!=null&&buttonList.size()>0) {
-			return RestResult.failure("按钮名称或域值已存在");
+			return RestResult.failure("按钮名称已存在");
 		}
-		button.setCreateId(1L);
+		/**
+		 * 校验field
+		 */
+		conditions = new HashMap<>();
+		conditions.put("field", button.getField());
+		buttonList = buttonService.getButtonEntityList(conditions);
+		
+		if(buttonList!=null&&buttonList.size()>0) {
+			return RestResult.failure("按钮域值已存在");
+		}
 		button.setCreateBy("supermanager");
 		button.setCreateDate(new Date());
 		buttonService.insert(button);
@@ -92,13 +102,18 @@ public class ButtonController extends BaseController{
 		return RestResult.success();
 	}
 	
-//	@ResponseBody
-//	@RequestMapping("/ids")
-//	public RestResult doDel() {
-//		List<Integer> idList = new ArrayList<>();
-//		if(ids!=null&&ids.length()>0) {
-//			
-//		}
-//	}
+	@ResponseBody
+	@RequestMapping("/delete")
+	public RestResult doDel(String ids) {
+		List<Integer> idList = new ArrayList<>();
+		if(ids!=null&&ids.trim().length()>0) {
+			List<String> idStrList = Arrays.asList(ids.split(","));
+			for (String idStr : idStrList) {
+				idList.add(Integer.parseInt(idStr));
+			}
+			buttonService.delete(idList);
+		}
+		return RestResult.success();
+	}
 
 }

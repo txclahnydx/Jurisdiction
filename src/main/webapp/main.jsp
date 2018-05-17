@@ -3,15 +3,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<jsp:include page="${path }/resources/common/header.jsp"/>
 <link href="${path }/resources/static/css/default.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="${path }/resources/easyui/1.5.5.1/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="${path }/resources/easyui/1.5.5.1/themes/icon.css">
-<script type="text/javascript" src="${path }/resources/jquery/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="${path }/resources/easyui/1.5.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="${path }/resources/easyui/1.5.5.1/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="${path }/resources/easyui/1.5.5.1/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src='${path }/resources/easyui/1.5.5.1/outlook2.js'></script>
+<script type="text/javascript" src='${path }/resources/uiframe/easyui/1.5.5.1/outlook2.js'></script>
 <title>Jurisdiction</title>
 </head>
 <script type="text/javascript">
