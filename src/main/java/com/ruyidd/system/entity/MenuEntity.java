@@ -1,10 +1,20 @@
 package com.ruyidd.system.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class MenuEntity {
-    private Long id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+public class MenuEntity implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
 
     private String name;
 
@@ -26,10 +36,12 @@ public class MenuEntity {
 
     private Long createBy;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date createDate;
 
     private Long updateBy;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date updateDate;
 
     private String remarks;

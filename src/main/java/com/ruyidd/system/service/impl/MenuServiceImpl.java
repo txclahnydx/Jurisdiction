@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ruyidd.system.dao.MenuEntityMapper;
 import com.ruyidd.system.entity.MenuEntity;
 import com.ruyidd.system.entity.MenuEntityExample;
 import com.ruyidd.system.service.IMenuService;
 
+@Service
 public class MenuServiceImpl implements IMenuService {
 	
 	@Autowired
@@ -52,8 +54,9 @@ public class MenuServiceImpl implements IMenuService {
 
 	@Override
 	public List<MenuEntity> getMenuEntityList(Map<String, Object> conditions) {
-		// TODO Auto-generated method stub
-		return null;
+		MenuEntityExample example = new MenuEntityExample();
+		example.createCriteria().andParentIdEqualTo(0L);
+		return menuEntityMapper.selectByExample(example);
 	}
 
 

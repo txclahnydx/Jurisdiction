@@ -16,6 +16,25 @@ function dataGridLoader(param,success,error){
 		}
 	});
 }
+//easyui treegrid 加载数据的方法
+function treeGridLoader(param,success,error){
+	var options = $(this).treegrid('options');
+	debugger;
+	$.ajax({
+		url:options.url,
+		type:options.method,
+		data:param,
+		dataType:'json',
+		success:function(data){
+			if(data.success){
+				success(data.data);
+			}else{
+				messageShow("ERROR","数据加载失败!");
+				error();
+			}
+		}
+	});
+}
 //easyui 消息弹出的方法
 function messageShow(title,message){
 	$.messager.show({  

@@ -15,7 +15,7 @@ function getRootPath(){
 }  
 	 var _menus = {"menus":[
 						{"id":"1","iconCls":"icon-add","text":"系统管理",
-							"children":[{"text":"菜单管理","iconCls":"icon-add","url":"http://www.nongfuit.com"},
+							"children":[{"text":"菜单管理","iconCls":"icon-add","url":"system/menu/index"},
 									{"text":"按钮设置","iconCls":"icon-set","url":"system/button/index"},
 									{"text":"系统日志","iconCls":"icon-log","url":"demo12.html"}
 								]

@@ -18,6 +18,9 @@
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="remarks" property="remarks" jdbcType="VARCHAR" />
     <result column="del_flag" property="delFlag" jdbcType="TINYINT" />
+    
+    <collection property="children" select="getChildren" javaType="java.util.List" column="id"/>
+    
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -382,4 +385,8 @@
       del_flag = #{delFlag,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="getChildren" resultMap="BaseResultMap" parameterType="Long">
+  	select * from sys_menu where parent_id=#{parentId}
+  </select>
 </mapper>
